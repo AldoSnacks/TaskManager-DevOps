@@ -8,7 +8,8 @@
 - RF03 Editar tareas existentes.
 - RF04 Eliminar tareas con confirmación.
 - RF05 Cambiar el estado: Pendiente, En proceso y Terminada.
-- RF06 Mostrar mensajes de confirmación y de error.
+- RF06 Asignar prioridad: Alta, Media o Baja.
+- Mensajes de confirmación y de error en cada operación.
 
 ### Calidad
 - 16 pruebas unitarias con pytest (CP01 a CP07).
