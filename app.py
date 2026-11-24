@@ -47,7 +47,7 @@ def create_app(database=None):
         """Regresa (datos_limpios, error)."""
         limpio = {}
         if not parcial or "nombre" in datos:
-            nombre = str(datos.get("nombre") or "").strip()
+            nombre = str(datos.get("nombre") or "")
             if not nombre:
                 return None, "El nombre de la tarea es obligatorio."
             if len(nombre) > 100:
@@ -79,6 +79,33 @@ def create_app(database=None):
     def health():
         get_db().execute("SELECT 1")
         return jsonify({"status": "ok"})
+
+    # RF02 Consultar tareas
+    @app.get("/api/tareas")
+    def listar():
+        filas = get_db().execute("SELECT * FROM tareas ORDER BY id DESC").fetchall()
+        return jsonify([dict(f) for f in filas])
+
+    # RF01 Registrar tareas (incluye RF06 prioridad)
+    @app.post("/api/tareas")
+    def crear():
+        datos, error = validar(request.get_json(silent=True) or {})
+        if error:
+            return jsonify({"error": error}), 400
+        db = get_db()
+        cur = db.execute(
+            "INSERT INTO tareas (nombre, descripcion, prioridad, estado) VALUES (?, ?, ?, ?)",
+            (datos["nombre"], datos["descripcion"], datos["prioridad"], datos["estado"]),
+        )
+        db.commit()
+        return jsonify({"mensaje": "Tarea registrada correctamente.", "tarea": buscar(cur.lastrowid)}), 201
+
+    @app.get("/api/tareas/<int:tarea_id>")
+    def obtener(tarea_id):
+        tarea = buscar(tarea_id)
+        if not tarea:
+            return jsonify({"error": "Tarea no encontrada."}), 404
+        return jsonify(tarea)
 
     return app
 
