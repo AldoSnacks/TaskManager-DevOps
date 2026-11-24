@@ -44,6 +44,13 @@ def test_cp04_editar_tarea(client):
     assert tarea["descripcion"] == "Versión 2"
 
 
+def test_cp05_eliminar_tarea(client):
+    tid = registrar(client).get_json()["tarea"]["id"]
+    assert client.delete(f"/api/tareas/{tid}").status_code == 200
+    assert client.get("/api/tareas").get_json() == []
+    assert client.get(f"/api/tareas/{tid}").status_code == 404
+
+
 @pytest.mark.parametrize("estado", ["En proceso", "Terminada", "Pendiente"])
 def test_cp06_cambiar_estado(client, estado):
     tid = registrar(client).get_json()["tarea"]["id"]
@@ -55,6 +62,16 @@ def test_cp06_cambiar_estado(client, estado):
 def test_cp06_estado_invalido(client):
     tid = registrar(client).get_json()["tarea"]["id"]
     assert client.put(f"/api/tareas/{tid}", json={"estado": "Cancelada"}).status_code == 400
+
+
+@pytest.mark.parametrize("prioridad", ["Alta", "Media", "Baja"])
+def test_cp07_seleccionar_prioridad(client, prioridad):
+    r = registrar(client, prioridad=prioridad)
+    assert r.get_json()["tarea"]["prioridad"] == prioridad
+
+
+def test_cp07_prioridad_invalida(client):
+    assert registrar(client, prioridad="Urgente").status_code == 400
 
 
 def test_editar_tarea_inexistente(client):

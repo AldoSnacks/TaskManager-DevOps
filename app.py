@@ -123,6 +123,16 @@ def create_app(database=None):
         db.commit()
         return jsonify({"mensaje": "Tarea actualizada correctamente.", "tarea": buscar(tarea_id)})
 
+    # RF04 Eliminar tareas
+    @app.delete("/api/tareas/<int:tarea_id>")
+    def eliminar(tarea_id):
+        if not buscar(tarea_id):
+            return jsonify({"error": "Tarea no encontrada."}), 404
+        db = get_db()
+        db.execute("DELETE FROM tareas WHERE id = ?", (tarea_id,))
+        db.commit()
+        return jsonify({"mensaje": "Tarea eliminada correctamente."})
+
     return app
 
 
