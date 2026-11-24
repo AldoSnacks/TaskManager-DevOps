@@ -27,6 +27,13 @@ def test_cp01_registrar_tarea(client):
     assert datos["tarea"]["estado"] == "Pendiente"
 
 
+def test_cp02_registrar_tarea_sin_nombre(client):
+    r = registrar(client, nombre="   ")
+    assert r.status_code == 400
+    assert "obligatorio" in r.get_json()["error"]
+    assert client.get("/api/tareas").get_json() == []
+
+
 def test_cp03_consultar_tareas(client):
     registrar(client, nombre="Tarea A")
     registrar(client, nombre="Tarea B")
