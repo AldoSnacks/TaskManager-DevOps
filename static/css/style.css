@@ -1,0 +1,35 @@
+:root { --azul: #1f4e79; --fondo: #f4f6f9; --borde: #d6dbe3; --texto: #1d2430; }
+* { box-sizing: border-box; }
+body { margin: 0; font-family: system-ui, Segoe UI, Arial, sans-serif; background: var(--fondo); color: var(--texto); }
+header { background: var(--azul); color: #fff; padding: 18px 24px; }
+header h1 { margin: 0; font-size: 1.6rem; }
+header p { margin: 4px 0 0; opacity: .85; }
+main { max-width: 1100px; margin: 24px auto; padding: 0 16px; display: grid; grid-template-columns: 360px 1fr; gap: 20px; }
+@media (max-width: 800px) { main { grid-template-columns: 1fr; } }
+.panel { background: #fff; border: 1px solid var(--borde); border-radius: 8px; padding: 18px; }
+h2 { margin-top: 0; font-size: 1.15rem; }
+label { display: block; font-weight: 600; margin: 10px 0 4px; font-size: .9rem; }
+input, textarea, select { width: 100%; padding: 8px; border: 1px solid var(--borde); border-radius: 6px; font: inherit; }
+.fila { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.acciones { display: flex; gap: 8px; margin-top: 14px; }
+button { background: var(--azul); color: #fff; border: 0; border-radius: 6px; padding: 9px 14px; cursor: pointer; font: inherit; }
+button.secundario { background: #6b7280; }
+button.peligro { background: #b42318; }
+#mensaje { min-height: 1.2em; font-weight: 600; }
+#mensaje.ok { color: #067647; }
+#mensaje.error { color: #b42318; }
+.encabezado-lista { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.encabezado-lista select { width: auto; }
+#lista-tareas { list-style: none; padding: 0; margin: 0; }
+.tarea { border: 1px solid var(--borde); border-radius: 6px; padding: 12px; margin-bottom: 10px; }
+.tarea h3 { margin: 0 0 4px; font-size: 1rem; }
+.tarea p { margin: 4px 0; color: #4b5563; }
+.etiquetas { display: flex; gap: 6px; flex-wrap: wrap; margin: 6px 0; }
+.etiqueta { font-size: .75rem; padding: 2px 8px; border-radius: 999px; background: #e5e7eb; }
+.p-Alta { background: #fde2e1; color: #912018; }
+.p-Media { background: #fef0c7; color: #93370d; }
+.p-Baja { background: #dcfae6; color: #085d3a; }
+.controles { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+.controles select { width: auto; padding: 5px; }
+.controles button { padding: 6px 10px; font-size: .85rem; }
+.vacio { color: #6b7280; }
