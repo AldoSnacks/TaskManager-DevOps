@@ -47,7 +47,7 @@ def create_app(database=None):
         """Regresa (datos_limpios, error)."""
         limpio = {}
         if not parcial or "nombre" in datos:
-            nombre = str(datos.get("nombre") or "")
+            nombre = str(datos.get("nombre") or "").strip()
             if not nombre:
                 return None, "El nombre de la tarea es obligatorio."
             if len(nombre) > 100:
