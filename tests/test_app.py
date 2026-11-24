@@ -35,6 +35,32 @@ def test_cp03_consultar_tareas(client):
     assert {t["nombre"] for t in tareas} == {"Tarea A", "Tarea B"}
 
 
+def test_cp04_editar_tarea(client):
+    tid = registrar(client).get_json()["tarea"]["id"]
+    r = client.put(f"/api/tareas/{tid}", json={"nombre": "Documentación final", "descripcion": "Versión 2"})
+    assert r.status_code == 200
+    tarea = r.get_json()["tarea"]
+    assert tarea["nombre"] == "Documentación final"
+    assert tarea["descripcion"] == "Versión 2"
+
+
+@pytest.mark.parametrize("estado", ["En proceso", "Terminada", "Pendiente"])
+def test_cp06_cambiar_estado(client, estado):
+    tid = registrar(client).get_json()["tarea"]["id"]
+    r = client.put(f"/api/tareas/{tid}", json={"estado": estado})
+    assert r.status_code == 200
+    assert client.get(f"/api/tareas/{tid}").get_json()["estado"] == estado
+
+
+def test_cp06_estado_invalido(client):
+    tid = registrar(client).get_json()["tarea"]["id"]
+    assert client.put(f"/api/tareas/{tid}", json={"estado": "Cancelada"}).status_code == 400
+
+
+def test_editar_tarea_inexistente(client):
+    assert client.put("/api/tareas/999", json={"nombre": "X"}).status_code == 404
+
+
 def test_registrar_sin_descripcion(client):
     r = registrar(client, descripcion="")
     assert r.status_code == 201
