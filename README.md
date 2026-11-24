@@ -4,6 +4,14 @@ Sistema web para la gestión de tareas de **TechSolutions**, desarrollado aplica
 
 **Equipo:** Aldo Misael Leal Palafox · Carlos Manuel Ojeda Hernández
 
+[![Integracion Continua](https://github.com/AldoSnacks/TaskManager-DevOps/actions/workflows/ci.yml/badge.svg)](https://github.com/AldoSnacks/TaskManager-DevOps/actions/workflows/ci.yml)
+
+- **Aplicación publicada (Render):** https://taskmanager-devops-23a0.onrender.com
+- **Versión estable:** [v1.0.0 – Primera versión estable de TaskManager](https://github.com/AldoSnacks/TaskManager-DevOps/releases/tag/v1.0.0)
+- **Tablero del proyecto:** GitHub Projects "TaskManager-DevOps"
+
+> En el plan gratuito de Render la instancia se suspende tras unos minutos sin uso; la primera visita puede tardar hasta 50 segundos y las tareas guardadas en SQLite se reinician cuando el servicio se reinicia (ver incidentes en Issues).
+
 ## Funcionalidades
 
 | Código | Funcionalidad | Descripción |
