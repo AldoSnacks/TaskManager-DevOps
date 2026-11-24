@@ -107,6 +107,22 @@ def create_app(database=None):
             return jsonify({"error": "Tarea no encontrada."}), 404
         return jsonify(tarea)
 
+    # RF03 Editar tareas y RF05 Cambiar estado
+    @app.put("/api/tareas/<int:tarea_id>")
+    def editar(tarea_id):
+        if not buscar(tarea_id):
+            return jsonify({"error": "Tarea no encontrada."}), 404
+        datos, error = validar(request.get_json(silent=True) or {}, parcial=True)
+        if error:
+            return jsonify({"error": error}), 400
+        if not datos:
+            return jsonify({"error": "No se enviaron datos para actualizar."}), 400
+        campos = ", ".join(f"{k} = ?" for k in datos)
+        db = get_db()
+        db.execute(f"UPDATE tareas SET {campos} WHERE id = ?", (*datos.values(), tarea_id))
+        db.commit()
+        return jsonify({"mensaje": "Tarea actualizada correctamente.", "tarea": buscar(tarea_id)})
+
     return app
 
 
